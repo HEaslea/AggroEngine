@@ -1,4 +1,11 @@
-Set up using CMake :
+# Aggro Engine
+
+## Project Overall Goal: 
+Produce an engine, allowing for the user to set up scenarios, for scripting AI behaviour on user models. 
+
+
+
+Set up using CMake O
 
 3rd Party SDK's : OPENGL : PhysX
 
@@ -22,3 +29,26 @@ GOAL : Write on string system that will hash rather than rely on heap performanc
 
  2. LAYER SYSTEM -> See Cherno vid again
     : Events and for graphics
+
+ 
+
+
+
+#layers
+## Layers
+
+Another dimension
+Objects on a layer
+
+Objects will require a script component
+
+
+
+### ECS
+##### ENTITY COMPONENT SYSTEM
+The idea being contiguous data : Structs of Arrays or Arrays of Structs
+Structs of Arrays -> Requiring a Management System which is harder to implement
+With a Layer Stack -> Arrays of Structs might make the most sense (O(n + m) -> m being the worst case size of each Component);
+ 
+
+Header Utility becoming more obvious with template classes, where the interface is most important. 
