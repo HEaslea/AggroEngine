@@ -2,9 +2,12 @@
  
 #include "../../PCH/pch.hpp"
 
+#include "../Externals/glew.h"
+#include "../Externals/glfw3.h"
 
 void windowTestOut();
 
+// Aggregate - POD Plain Old Data
 struct WindowProperties
 { 
     unsigned int _width;
@@ -12,15 +15,33 @@ struct WindowProperties
 
     std::string _title; 
 
-    WindowProperties(unsigned int w, unsigned int h, const std::string& t);
 };
 
 class Window 
 { 
     WindowProperties _properties;
+
+    GLFWwindow* _window;
+
+    void createWindow();
+
 public: 
 
-    Window(const WindowProperties&);
+    Window(WindowProperties const&);
+    Window(unsigned int w = 1280, unsigned int h = 900);
 
-    void testOut();
+    ~Window();
+
+    void makeCurrentContext();
+
+    void setFullScreen();
+     
+    bool shouldWindowClose();
+
+    void clearColourBuffer();
+
+    void swapBuffers();
+
+    // should this be here? 
+    void pollEvents();
 };

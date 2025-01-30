@@ -4,21 +4,79 @@
 
 #include <string>
 
-void windowTestOut()
+
+
+Window::Window(const WindowProperties& props) : _properties(props) { createWindow(); }
+
+Window::Window(unsigned int w, unsigned int h) : _properties({w, h, "AggroEngine"}) { createWindow(); }
+ 
+Window::~Window() 
 { 
-    std::cout << "Window Test Out" << std::endl;
+    // NEED A LOGGING SYSTEM
+    // log(window closed), then app closed
+    glfwDestroyWindow(_window);
 }
 
-WindowProperties::WindowProperties(unsigned int w = 1280,
-        unsigned int h = 900, 
-        const std::string& t = "Default Aggro Engine")  : 
-        _width(w), _height(h), _title(t) {}
+void Window::createWindow()
+{ 
+    _window = glfwCreateWindow(_properties._width,
+        _properties._height, 
+        _properties._title.c_str(), NULL, NULL);
+    if(!_window)
+    { 
+        // LOG FATAL ERROR
+        // placeholder cout 
+        std::cout << "[FATAL ERROR] - WINDOW CREATION FAILED -  window::createWindow" << std::endl;
+        glfwTerminate();
+        // terminate whole app found within app
+    }
+
+    makeCurrentContext();
+}
+
+
+// simple wrapper
+void Window::makeCurrentContext()
+{ 
+    glfwMakeContextCurrent(_window);
+}
+
+void Window::setFullScreen() 
+{ 
+    // primary monitor, research other calls
+
+    // Get Monitor
+    GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+    // Get Mode of Monitor
+    const GLFWvidmode* monMode = glfwGetVideoMode(monitor);
+
+    // Actually Set Window
+    // Will set on main monitor due to earlier call
+    // Will change refreshrate
+    glfwSetWindowMonitor(_window, monitor, 0, 0, monMode->width, monMode->height, monMode->refreshRate);
+}
+ 
+// To allow for my own window callbacksd
+bool Window::shouldWindowClose()
+{ 
+    return glfwWindowShouldClose(_window);
+}
+
+void Window::clearColourBuffer()
+{ 
+    // Implied all channels (?)
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void Window::swapBuffers()
+{ 
+    glfwSwapBuffers(_window);
+}
+
+void Window::pollEvents()
+{ 
     
-
-Window::Window(const WindowProperties& props) : _properties(props) {}
-
-
-void Window::testOut()
-{ 
-    std::cout << "WINDOW TEST OUT : h: " << _properties._height << " w: " << _properties._width << " title: " << _properties._title << std::endl;
+    glfwPollEvents();
 }
+ 
+// NEED WRAPPER FOR glfwWindowShouldClose

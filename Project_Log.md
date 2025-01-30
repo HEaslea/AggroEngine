@@ -1,9 +1,8 @@
 # Aggro Engine
+##### For Personal Use
 
 ## Project Overall Goal: 
 Produce an engine, allowing for the user to set up scenarios, for scripting AI behaviour on user models. 
-
-
 
 Set up using CMake O
 
@@ -29,8 +28,8 @@ GOAL : Write on string system that will hash rather than rely on heap performanc
 
  2. LAYER SYSTEM -> See Cherno vid again
     : Events and for graphics
-
- 
+    
+ 3. LOGGING SYSTEM -> Write My Own
 
 
 
@@ -52,3 +51,33 @@ With a Layer Stack -> Arrays of Structs might make the most sense (O(n + m) -> m
  
 
 Header Utility becoming more obvious with template classes, where the interface is most important. 
+
+
+
+## Learning Opportunities
+Why Default args only in Header files? 
+
+Template Error Codes
+
+Unpacking External Dependencies using CMAKE
+ 
+Thread safey through most systems eg. Logging
+ 
+
+
+
+
+# VIDMODE STRUCT REFERENCE
+typedef struct GLFWvidmode {
+    int width;        // The width of the mode in pixels
+    int height;       // The height of the mode in pixels
+    int redBits;      // The number of bits for the red channel
+    int greenBits;    // The number of bits for the green channel
+    int blueBits;     // The number of bits for the blue channel
+    int refreshRate;  // The refresh rate of the monitor (in Hz)
+} GLFWvidmode;
+
+CMake really doesn't like when you move a file with the cache still in the last file
+Just delete the cache and do it all again.
+cmake -B build -S . -G "Ninja" for personal machine desk/laptop
+
