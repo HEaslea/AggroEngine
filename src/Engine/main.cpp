@@ -7,32 +7,21 @@
 
 #include "Layers.hpp"
 #include "Window.hpp"
+#include "../Utils/Vector.hpp"
 
 int main()
 {
-    // put into app, keep main clear
-    if(!glfwInit())
-    { 
-        std::cout << "FAILED INIT" << std::endl;
-        return -1;
-    }
+    Vector<int, 3> g{1, 2, 3};
+    Vector<int, 3> f{4, 5, 6};
 
-    Window w;
+    auto n = g.cross(f);
 
-    w.setFullScreen();
-    
-    while(!w.shouldWindowClose())
-    { 
-        w.clearColourBuffer();
+    n.log();
 
-        w.swapBuffers();
-        w.pollEvents();
-    }
+    Vector<int, 2> x{1, 2};
+    Vector<int, 2> y{3, 4};
 
-    w.~Window();
-
-    // this needs to be in app
-    glfwTerminate();
+    std::cout << x.cross(y) << std::endl;
 
     return 0;
 }

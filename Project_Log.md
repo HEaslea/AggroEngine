@@ -63,9 +63,17 @@ Unpacking External Dependencies using CMAKE
  
 Thread safey through most systems eg. Logging
  
+Exception safety - where to apply? 
 
+Copy Elision
 
+Remember Rule of 5
 
+Keep it portable - <cmath>` is portable (as far as I'm aware)
+ 
+Template class name injection
+
+Really nail SFINAE - Vector cross product -> 
 
 # VIDMODE STRUCT REFERENCE
 typedef struct GLFWvidmode {
@@ -80,4 +88,7 @@ typedef struct GLFWvidmode {
 CMake really doesn't like when you move a file with the cache still in the last file
 Just delete the cache and do it all again.
 cmake -B build -S . -G "Ninja" for personal machine desk/laptop
+
+### Template Declarations with SFINAE 
+In Vector, have to make sure that the cross product has to share declaration, using SFINAE, to change the return type.
 
