@@ -93,3 +93,13 @@ cmake -B build -S . -G "Ninja" for personal machine desk/laptop
 In Vector, have to make sure that the cross product has to share declaration, using SFINAE, to change the return type.
 
 Have we done enough edge case checking? 
+ 
+
+### Static Libs - With Templates
+For instantiation - these files cannot be in a static lib, definition needs to be visible when instantiation. 
+
+Making this a static lib - would be interesting - requires: 
+Explicit Instantiation - this would be in the Vector.cpp - still deciding on this
+
+The other option is having a header only library - really enticing - much simpler and portable to my other projects. 
+
