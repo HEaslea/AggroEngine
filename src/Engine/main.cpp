@@ -11,17 +11,14 @@
 
 int main()
 {
-    Vector<int, 3> g{1, 2, 3};
-    Vector<int, 3> f{4, 5, 6};
+    Vector<float, 3> g{1.0, 2.0, 3.0};
+    Vector<float, 3> f{4.0, 5.0, 9.0};
 
-    auto n = g.cross(f);
+    auto n = Vectors::project(g, f);
 
     n.log();
-
-    Vector<int, 2> x{1, 2};
-    Vector<int, 2> y{3, 4};
-
-    std::cout << x.cross(y) << std::endl;
+     
+    std::cout << Math::getDeg(Vectors::angleBetween(g, f)) << std::endl;;
 
     return 0;
 }

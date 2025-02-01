@@ -5,6 +5,14 @@
 #include <array>
 #include <initializer_list>
 #include <cmath> 
+ 
+#define PI 3.14159265358979323846
+
+template <typename T, std::size_t N> 
+struct AgVector
+{ 
+    std::array<T, N> _data;
+};
 
 template <typename T, std::size_t N> 
 class Vector
@@ -81,16 +89,24 @@ public:
     // BASE VECTOR OPERATIONS
     Vector operator*(T s) const; // const? 
     Vector operator+(Vector const& other) const;
-    Vector operator+(T s);
+    Vector operator-(Vector const& other) const;
 
     T dot(Vector const& other) const; 
 
     T magnitude() const;
 
+    void normalize();
+
     // want to represent that this is not in place
     Vector<float, N> getNormalized() const;
 
-    // Reflection generate a vector
+    // got to work on naming "Cache invalidation and naming"
+    Vector getDirection(Vector const& other) const;
+
+    //return distance to given vector
+    float getDistance(Vector const& other) const;
+
+    // Reflection to return a vector of components
     std::vector<T> reflection() const;
      
 
@@ -152,19 +168,19 @@ Vector<T, N> Vector<T, N>::operator+(Vector<T, N> const& other) const
 
     return temp;
 }
-
+ 
 template <typename T, std::size_t N> 
-Vector<T, N> Vector<T, N>::operator+(T s)  
+Vector<T, N> Vector<T, N>::operator-(Vector<T, N> const& other) const
 { 
-    Vector temp;
+    Vector result;
     for(std::size_t i = 0; i < N; ++i)
     { 
-        temp[i] = _data[i] + s;
+        result._data[i] = _data[i] - other.data[i];
     }
 
-    return temp;
+    return result;
 }
- 
+
 template <typename T, std::size_t N> 
 T Vector<T, N>::dot(Vector const& other)  const
 { 
@@ -201,6 +217,16 @@ std::vector<T> Vector<T, N>::reflection() const
 
     return ret;
 }
+
+template <typename T, std::size_t N> 
+void Vector<T, N>::normalize()
+{ 
+    auto mag = magnitude();
+    for(std::size_t i = 0; i < N; ++i)
+    { 
+        _data[i] = _data[i] / mag;
+    }
+}
  
 // or double (how much precision)
 template <typename T, std::size_t N> 
@@ -218,6 +244,27 @@ Vector<float, N> Vector<T, N>::getNormalized() const
     }
 
     return ret;
+}
+
+template <typename T, std::size_t N> 
+Vector<T, N> Vector<T, N>::getDirection(Vector<T, N> const& other) const 
+{ 
+    // point we want to get to - the point we are at
+    Vector ret; 
+    for(std::size_t i = 0; i < N; ++i)
+    { 
+        ret._data[i] = other._data[i] - _data[i];
+    }
+
+    return ret;
+}
+
+template <typename T, std::size_t N> 
+float Vector<T, N>::getDistance(Vector<T, N> const& other) const 
+{ 
+    // point we want to get to - the point we are at
+    auto directionVec = getDirection(other);
+    return directionVec.magnitude();
 }
 
 template <typename T, std::size_t N> // class template 
@@ -251,3 +298,68 @@ Vector<T, N>::cross(Vector<T, N> const& other) const
 }
 
 // Cross for 2D Vector specialization
+namespace Vectors
+{ 
+    // Vector Type Type Trait Primary/Default
+    template <typename T> 
+    struct is_vector_type : std::false_type {};
+
+    // For any instantiation of Vector
+    template <typename T, std::size_t N> 
+    struct  is_vector_type<Vector<T, N>> : std::true_type {};
+
+    template <typename T> 
+    auto getScaledDirection(T const& from, T const& to, float scalar)
+    -> std::enable_if_t<is_vector_type<T>::value, T>
+    { 
+        T direction = from.getDirection(to);
+
+        // check if mag is 0
+        if(direction.magnitude())
+        {
+            direction.normalize();
+            direction.scale(scalar);
+        }
+        return direction;
+    }
+     
+    // project A onto B
+    template <typename T> 
+    auto project(T const& a, T const& b)
+    -> std::enable_if_t<is_vector_type<T>::value, T>
+    { 
+        // normalize what we project onto, then scale that normalized
+        T normB = b.getNormalized();
+        // Then dot of a and normalized B
+        auto dotProd = a.dot(normB);
+        normB.scale(dotProd);
+        return normB;
+    }
+     
+    template <typename T> 
+    auto angleBetween(T const& start, T const& end)
+    -> std::enable_if_t<is_vector_type<T>::value, float> 
+    { 
+        float dotProd = start.dot(end);
+        float magStart = start.magnitude();
+        float magEnd =  end.magnitude();
+        if(magStart == 0 || magEnd == 0)
+        { 
+            return 0.0f;
+        }
+
+        // cos(a) = a . b / (|a||b|)
+        float rightEq = dotProd / (magStart * magEnd);
+        return std::acos(rightEq);
+    }
+}
+ 
+// only for testing and util for now
+namespace Math
+{ 
+    template <typename T> 
+    float getDeg(T rad)
+    { 
+        return (rad * 180.0f) / PI;
+    }
+}

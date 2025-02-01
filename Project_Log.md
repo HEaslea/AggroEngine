@@ -92,3 +92,4 @@ cmake -B build -S . -G "Ninja" for personal machine desk/laptop
 ### Template Declarations with SFINAE 
 In Vector, have to make sure that the cross product has to share declaration, using SFINAE, to change the return type.
 
+Have we done enough edge case checking? 
