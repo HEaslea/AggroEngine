@@ -103,3 +103,5 @@ Explicit Instantiation - this would be in the Vector.cpp - still deciding on thi
 
 The other option is having a header only library - really enticing - much simpler and portable to my other projects. 
 
+## Documentation 
+Doxygen

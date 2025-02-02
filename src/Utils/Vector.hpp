@@ -357,6 +357,11 @@ namespace Vectors
 // only for testing and util for now
 namespace Math
 { 
+    /**
+     * @brief Turns radians into Degrees
+     * @param T rad - number in radians
+     * @return float - number in degrees
+    */
     template <typename T> 
     float getDeg(T rad)
     { 
