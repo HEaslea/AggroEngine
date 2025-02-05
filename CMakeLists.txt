@@ -20,7 +20,7 @@ target_link_libraries(aggro_main PRIVATE precompiled_headers)
  
 #general includes in Engine
 target_include_directories(aggro_main PRIVATE ${PROJECT_SOURCE_DIR}/src/Engine)
-target_include_directories(aggor_main PRIVATE ${PROJECT_SOURCE_DIR}/src/Utils)
+target_include_directories(aggro_main PRIVATE ${PROJECT_SOURCE_DIR}/src/Utils)
 
 # REQUIRED OpenGL
 # see openGL CMake documentation 

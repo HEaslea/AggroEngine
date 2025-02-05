@@ -105,3 +105,38 @@ The other option is having a header only library - really enticing - much simple
 
 ## Documentation 
 Doxygen
+ 
+
+## Matrix
+https://glm.g-truc.net/0.9.4/api/a00133.html
+
+There is the idea of having the template, generic size class, that I will continue working with. 
+For faster implementation, I will also have a Mat4 class, in tandem with helper functions to create rotation, scale and transform etc. 
+
+Matrix Multiplication - Dot product of every row WITH every column
+which is the sum of products per row - per column
+rows of left hand matrix (first matrix) - columns of the right (second matrix)
+ 
+operator*(Mat4 const& other)
+{ 
+   Mat4<float> result;
+   for(int i = 0; i < 4; ++i)
+   { 
+      for(tin j = 0; j < 4; ++i)
+      { 
+         result._data[i][j] = 0
+         for(int k = 0; k < 4; ++i)
+         { 
+            result._data[i][j] += _data [i][k] * other_data[k][j];
+         }
+      }
+   }
+
+   return result;
+}
+
+O(n^3)
+ 
+TODO - Research Schlassens
+
+We can avoid rotation matrices by using Quaternions which is also a better challenge
