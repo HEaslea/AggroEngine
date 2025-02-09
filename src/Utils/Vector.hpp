@@ -109,6 +109,36 @@ public:
     // Reflection to return a vector of components
     std::vector<T> reflection() const;
      
+    // SETTERS
+    void setX(T x)
+    { 
+        _data[0] = x;
+    }
+
+    void setY(T y)
+    { 
+        _data[1] = y;
+    }
+
+    void setZ(T z)
+    { 
+        _data[2] = z;
+    }
+
+    T getX() const
+    { 
+        return _data[0];
+    }
+
+    T getY() const
+    { 
+        return _data[1];
+    }
+
+    T getZ() const 
+    { 
+        return _data[2];
+    }
 
     // General 
     template <std::size_t X = N>   

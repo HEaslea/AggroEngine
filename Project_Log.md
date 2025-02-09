@@ -140,3 +140,30 @@ O(n^3)
 TODO - Research Schlassens
 
 We can avoid rotation matrices by using Quaternions which is also a better challenge
+
+
+## Quaternions
+Requiring a reasonable interface from vectors: 
+v' = qvq{-1}
+
+Trying to avoid a class to keep things lightweight - doesn't seem necessary
+
+As self contained as possible
+ 
+Rotating a Point using Quaternions
+https://danceswithcode.net/engineeringnotes/quaternions/quaternions.html
+
+args as degrees than convert, remedy later
+my brain works better in degrees
+
+Potentially convert quaternion to matrix
+Active rotation - rotating object (q{-1} * v) * q
+Passive rotation - rotating coordinate space (q * v) * q{-1}
+
+radians -> pi / 180 (pi per 180 deg)
+ 
+The reflection of a vector requires a reference - I'm not convinced this the right thing to do
+ 
+Upon working implementation, had errors in results that should be 0, being at xe-8. 
+Due to floating point inaccuracies, that are found (I believe) in std::sin/cos
+Therefore, number will be rounded to at the end fo the function in order to avoid these small inaccuracies. 
